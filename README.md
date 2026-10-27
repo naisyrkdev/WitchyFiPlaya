@@ -1,7 +1,7 @@
 <p align="center"><img src="content/banner.png" alt="WitchyFiPlaya banner" p>
 
-![Rust Percentage](https://img.shields.io/github/languages/top/naisyrkdev/yasaff?logo=rust&logoColor=white)
-[![License](https://img.shields.io/github/license/naisyrkdev/yasaff)](LICENSE)
+![Rust Percentage](https://img.shields.io/github/languages/top/naisyrkdev/WitchyFiPlaya?logo=rust&logoColor=white)
+[![License](https://img.shields.io/github/license/naisyrkdev/WitchyFiPlaya)](LICENSE)
 ![Status](https://img.shields.io/badge/status-alpha-red)
 ![Status](https://img.shields.io/badge/status-WIP-yellow)
 
