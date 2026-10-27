@@ -1,0 +1,56 @@
+name: Package
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  windows:
+    name: Build Windows binary
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Build release
+        run: cargo build --locked --release
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: witchy-fi-playa-windows
+          path: target/release/witchy-fi-playa.exe
+          if-no-files-found: error
+
+  zip:
+    name: Build installable zip
+    needs: windows
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Linux dependencies
+        run: sudo apt-get update && sudo apt-get install -y pkg-config libasound2-dev libudev-dev zip
+
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: witchy-fi-playa-windows
+          path: ${{ runner.temp }}/windows-bin
+
+      - name: Package
+        run: WINDOWS_EXE="$RUNNER_TEMP/windows-bin/witchy-fi-playa.exe" bash ./package.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: witchy-fi-playa-zip
+          path: dist/*.zip
+          if-no-files-found: error

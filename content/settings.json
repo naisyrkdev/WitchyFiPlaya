@@ -1,0 +1,63 @@
+{
+    // Animations, each one either a sprite sheet or a folder with one picture per frame.
+    //
+    // A sprite sheet in this folder. Frames are read left to right, top to bottom.
+    //   src      file name in this folder
+    //   columns, rows   how the sheet is cut into frames
+    //   frames   (optional) how many cells are used, if the last row isn't full
+    //   fps      (optional) frames per second, 8 by default
+    //
+    // A folder of frames in this folder (used when src is a folder, or framesNames or format is given).
+    //   src          folder name in this folder
+    //   framesNames  (optional) the frame files in order, without the extension
+    //   frames       (optional) without framesNames: the frames are named 1, 2, 3… up to this number;
+    //                without both, every picture in the folder is used, ordered by number then name
+    //   format       (optional) the frame files' extension, "png" by default
+    //   fps          (optional) frames per second, 8 by default
+    "dancingAnimations": {
+        // "base1": {
+        //     "src": "base_1.png",
+        //     "columns": 4,
+        //     "rows": 4,
+        //     "fps": 8
+        // },
+        "base_1_catalog": {
+            "src": "base_1",
+            "frames": 3,
+            "framesNames": [ "3", "1", "2" ],
+            "format": "png",
+            "fps": 4
+        }
+    },
+
+    // Which animation dances to a track:
+    //   ByTrackThenBase                  the track's own animation, else baseAnimation (or the first one)
+    //   ByTrackOnly                      the track's own animation, else nobody dances
+    //   TotalRandom                      a random one for every track (the default when empty)
+    //   ByTrackThenRandomFromRandomPool  the track's own animation, else a random one of those
+    //                                    not assigned to any track
+    //   Repeatly                         one after another (alphabetically by name), starting over
+    //                                    after the last; it ignores which track is playing
+    // Random picks never repeat the animation of the previous track when there is another one.
+    "dancingLogic": "TotalRandom",
+
+    // Used by ByTrackThenBase (a name from dancingAnimations, or its src).
+    "baseAnimation": "base_1_catalog",
+
+    // Shown when nothing plays or the music is paused, described like the sheets above.
+    // When left out, sleep.png in this folder is used as a single still image.
+    "sleepAnimation": {
+        "src": "sleep.png"
+    },
+
+    // Animations for given tracks. Title, Author and File (the file name, e.g. "song.mp3") are
+    // optional, but at least one is needed and all that are given must match (ignoring case).
+    // Dancing is a name from dancingAnimations, or its src.
+    "animationPerTracksObjects": {
+        "Track1": {
+            "Title": "Funny Song",
+            "Author": "Funny Author",
+            "Dancing": "base_1_catalog"
+        }
+    }
+}
